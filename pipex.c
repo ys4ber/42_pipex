@@ -1,7 +1,9 @@
 #include "pipex.h"
 
+#define errno 0
 
-char	*ft_path(char *cmd, char **env)
+
+char	*ft_get_path(char *cmd, char **env)
 {
 	char	**all_paths;
 	char	*piece_path;
@@ -30,7 +32,7 @@ char	*ft_path(char *cmd, char **env)
 	return (NULL);
 }
 
-char	*ft_pwd_p(char *cmd, char **env)
+char	*ft_pwd_p(char *cmd, char **env, char *av)
 {
 	char	*pwd_p;
 	char	*res;
@@ -54,7 +56,9 @@ char	*ft_pwd_p(char *cmd, char **env)
 		return (res);
 	else
 		free(res);
-	exit(0);
+	ft_putstr_fd(av, 2);
+	ft_putstr_fd(": my pipex: command not found\n", 2);
+	exit(127);
 }
 
 void	get_cmd(char *av, char **env)
@@ -64,6 +68,8 @@ void	get_cmd(char *av, char **env)
 	char	*path;
 	int		i;
 
+	if (av == NULL)
+		exit(126);
 	i = 0;
 	cmd2 = ft_split(av, ' ');
 	cmd = ft_split(av, ' ');
@@ -75,14 +81,11 @@ void	get_cmd(char *av, char **env)
 		cmd = ft_split(cmd[i - 1], ' ');
 		execve(cmd2[0], cmd, env);
 	}
-	path = ft_path(cmd[0], env);
+	path = ft_get_path(cmd[0], env);
 	if (path == NULL)
-		path = ft_pwd_p(cmd[0], env);
+		path = ft_pwd_p(cmd[0], env, av);
 	if (execve(path, cmd, env) == -1)
-	{
-		perror("common error");
-		exit(ERR_FILE_NOT_FOUND);
-	}
+		(perror("command error\n"), exit(127));
 }
 
 void	ft_parent_process(char **av, char **env, int *fd)
@@ -92,7 +95,7 @@ void	ft_parent_process(char **av, char **env, int *fd)
 	fd_out = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd_out == -1)
 	{
-		perror("Output file error");
+		perror("");
 		exit(1);
 	}
 	dup2(fd[0], 0);
@@ -103,50 +106,54 @@ void	ft_parent_process(char **av, char **env, int *fd)
 
 void	child_process(char **av, int *fd, char **env)
 {
-	if (access(av[1], F_OK) == -1)
-	{
-		perror("input File does not exist");
-		exit(ERR_FILE_NOT_FOUND);
-	}
-	if (access(av[1], R_OK) == -1)
-	{
-		perror("Permission denied\n");
-		exit(ERR_PERMISSION_DENIED);
-	}
-	if (access(av[4], W_OK) == -1)
-	{
+	int	fd_in;
 
-		dup2(fd[1], 1);
-		dup2(open(av[1], O_RDONLY), 0);
-		close(fd[0]);
-    	get_cmd(av[2], env);
+	fd_in = open(av[1], O_RDONLY);
+	if (fd_in == -1)
+	{
+		ft_putstr_fd(av[1], 2);
+		perror(" ");
+		exit(1);
 	}
+	dup2(fd[1], 1);
+	dup2(fd_in, 0);
+	close(fd[0]);
+	get_cmd(av[2], env);
+}
+
+void close_fd(int *fd, int n)
+{
+	close(fd[0]);
+	close(fd[1]);
+	while (wait(&n) > 0)
+		;
+	if (WIFEXITED(n))
+		exit(WEXITSTATUS(n));
+	exit(127);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	int	pid;
 	int	fd[2];
+	int	n;
 
 	if (ac != 5)
-		return (0);
+	{
+		ft_putstr_fd("Error: wrong number of arguments\n", 2);
+		exit(1);
+	}
 	if (pipe(fd) == -1)
 		(perror("Pipe error"), exit(ERR_PIPE_ERROR));
 	pid = fork();
 	if (pid == 0)
 		child_process(av, fd, env);
-	else 
+	else
 	{
 		pid = fork();
 		if (pid == 0)
 			ft_parent_process(av, env, fd);
 		else
-		{
-			close(fd[0]);
-			close(fd[1]);
-			while (wait(NULL) > 0)
-				;
-		}
+			close_fd(fd, n);
 	}
 }
-	

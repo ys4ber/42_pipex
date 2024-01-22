@@ -2,16 +2,16 @@ NAME = pipex
 
 CC = cc
 
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-SRC = ft_split.c ft_help_split.c pipex.c
+SRC = ft_split.c ft_help_split.c fpipex.c utils.c pipex.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC)  $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)

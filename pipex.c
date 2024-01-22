@@ -69,7 +69,10 @@ void	get_cmd(char *av, char **env)
 	int		i;
 
 	if (av == NULL)
+	{
+		perror("Error: Null command");
 		exit(126);
+	}
 	i = 0;
 	cmd2 = ft_split(av, ' ');
 	cmd = ft_split(av, ' ');
@@ -85,7 +88,7 @@ void	get_cmd(char *av, char **env)
 	if (path == NULL)
 		path = ft_pwd_p(cmd[0], env, av);
 	if (execve(path, cmd, env) == -1)
-		(perror("command error\n"), exit(127));
+		(perror(""), exit(127));
 }
 
 void	ft_parent_process(char **av, char **env, int *fd)
@@ -129,7 +132,7 @@ void close_fd(int *fd, int n)
 		;
 	if (WIFEXITED(n))
 		exit(WEXITSTATUS(n));
-	exit(127);
+	exit(0);
 }
 
 int	main(int ac, char **av, char **env)

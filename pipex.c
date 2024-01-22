@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ysaber <ysaber@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/22 16:17:56 by ysaber            #+#    #+#             */
+/*   Updated: 2024/01/22 16:23:20 by ysaber           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	ft_parent_process(char **av, char **env, int *fd)
@@ -32,6 +44,7 @@ void	child_process(char **av, int *fd, char **env)
 	close(fd[0]);
 	get_cmd(av[2], env);
 }
+
 void	close_fd(int *fd, int n)
 {
 	close(fd[0]);
@@ -45,9 +58,9 @@ void	close_fd(int *fd, int n)
 
 int	main(int ac, char **av, char **env)
 {
-	int pid;
-	int fd[2];
-	int n;
+	int	pid;
+	int	fd[2];
+	int	n;
 
 	if (ac != 5)
 	{

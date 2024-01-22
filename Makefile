@@ -4,7 +4,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = ft_split.c ft_help_split.c fpipex.c utils.c pipex.c
+SRC = ft_split.c ft_help_split.c ft_pipex.c utils.c pipex.c
 
 OBJ = $(SRC:.c=.o)
 

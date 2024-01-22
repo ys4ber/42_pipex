@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ysaber <ysaber@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/22 16:18:04 by ysaber            #+#    #+#             */
+/*   Updated: 2024/01/22 16:24:02 by ysaber           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 static int	ft_count_words(const char *s, char c)
@@ -60,7 +72,7 @@ static int	fill_string(const char *s, char c, char **ret, int len)
 
 char	**ft_split(const char *s, char c)
 {
-	char **ret;
+	char	**ret;
 
 	if (!s)
 		return (NULL);

@@ -1,11 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ysaber <ysaber@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/22 16:17:48 by ysaber            #+#    #+#             */
+/*   Updated: 2024/01/22 16:21:47 by ysaber           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-void ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-    int i = 0;
-    while(s[i])
-        i++;
-    write(fd, s, i);
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	write(fd, s, i);
 }
 
 char	*ft_strnstr(const char *str, const char *to_find, int len)
@@ -31,8 +45,6 @@ char	*ft_strnstr(const char *str, const char *to_find, int len)
 	}
 	return (NULL);
 }
-
-
 
 char	*ft_strjoin(char *s1, char *s2)
 {

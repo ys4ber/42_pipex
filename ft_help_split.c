@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_help_split.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ysaber <ysaber@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/22 16:18:07 by ysaber            #+#    #+#             */
+/*   Updated: 2024/01/22 16:24:20 by ysaber           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 static char	*ft_strcpy(char *dest, const char *src)
@@ -50,7 +62,6 @@ char	*ft_substr(char const *s, int start, int len)
 	int		i;
 
 	str_len = ft_strlen(s);
-	;
 	if (start >= str_len)
 		return (NULL);
 	if (len > str_len - start)

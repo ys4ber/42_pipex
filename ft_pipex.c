@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fpipex.c                                           :+:      :+:    :+:   */
+/*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysaber <ysaber@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ezekiel <ezekiel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:18:11 by ysaber            #+#    #+#             */
-/*   Updated: 2024/01/22 16:18:12 by ysaber           ###   ########.fr       */
+/*   Updated: 2024/01/23 12:48:14 by ezekiel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,8 @@ void	get_cmd(char *av, char **env)
 	cmd = ft_split(av, ' ');
 	if (access(cmd[0], F_OK) == 0)
 	{
-		cmd = ft_split(av, ' ');
 		while (cmd[i])
 			i++;
-		cmd = ft_split(cmd[i - 1], ' ');
 		execve(cmd2[0], cmd, env);
 	}
 	path = ft_get_path(cmd[0], env);
